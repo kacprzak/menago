@@ -3,8 +3,7 @@ module Team where
 import Player
 
 bestLineup :: [Player] -> [Player]
-bestLineup p = take 11 p
-
---bestGoalkeeper :: [Player] -> Player
---bestGoalkeeper ps = head $ map sort & groupBy (\)
-
+bestLineup p = concat [take 1 (bestOn Goalkeeper p)
+                      ,take 4 (bestOn Defender p)
+                      ,take 4 (bestOn Midfielder p)
+                      ,take 2 (bestOn Forward p)]
