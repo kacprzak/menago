@@ -1,5 +1,5 @@
 TARGETS=menago
-SOURCES=Main.hs Player.hs PlayerDB.hs
+SOURCES=Main.hs Player.hs PlayerDB.hs Team.hs
 FLAGS=--make
 
 all: $(TARGETS)

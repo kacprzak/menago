@@ -1,5 +1,6 @@
 import qualified Player as P
 import qualified PlayerDB as PDB
+import qualified Team as T
 
 import Data.Time
 
@@ -20,5 +21,5 @@ printTeamVsTeam team1 team2 = do
   
 main :: IO ()
 main = do
-  printTeamVsTeam PDB.legiaPlayers PDB.wislaPlayers
+  printTeamVsTeam (T.bestLineup PDB.legiaPlayers) (T.bestLineup PDB.wislaPlayers)
   
