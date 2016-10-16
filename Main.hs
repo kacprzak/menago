@@ -21,5 +21,8 @@ printTeamVsTeam team1 team2 = do
   
 main :: IO ()
 main = do
-  printTeamVsTeam (T.bestLineup PDB.legiaPlayers) (T.bestLineup PDB.wislaPlayers)
-  
+  let legia = T.bestLineup PDB.legiaPlayers
+      wisla = T.bestLineup PDB.wislaPlayers
+  printTeamVsTeam legia wisla
+  let avgSkill = show . T.averageSkill
+  putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
