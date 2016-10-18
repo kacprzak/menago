@@ -13,4 +13,4 @@ menago: $(SOURCES)
 clean:
 	rm *.hi *.o $(TARGETS)
 
-.PHONY: all clean
+.PHONY: menago all clean

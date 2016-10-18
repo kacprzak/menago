@@ -21,12 +21,27 @@ printTeamVsTeam team1 team2 = do
   where
     lineup1 = T.bestLineup team1
     lineup2 = T.bestLineup team2
-  
-main :: IO ()
-main = do
+
+playGame :: IO ()
+playGame = do
   let legia = TDB.legia
       wisla = TDB.wisla
   putStrLn $ (T.name legia) ++ " Vs " ++ (T.name wisla)
   let avgSkill = show . round . T.averageSkill . T.bestLineup
   putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
   printTeamVsTeam legia wisla
+  
+handleMainMenu :: Char -> IO ()
+handleMainMenu '1' = playGame
+handleMainMenu _ = return ()
+
+mainMenu :: IO ()
+mainMenu = do
+  putStrLn "Menago v0.1\n1. New game\n2. Exit"
+  ch <- getChar
+  _ <- getChar
+  handleMainMenu ch
+  if ch == '2' then return () else mainMenu
+
+main :: IO ()
+main = mainMenu
