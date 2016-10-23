@@ -3,6 +3,7 @@ import qualified Team as T
 import qualified TeamDB as TDB
 
 import Data.Time
+import System.IO
 
 toNameAge :: Day -> P.Player -> String
 toNameAge day p = name ++ " (" ++ age ++ ")"
@@ -30,18 +31,25 @@ playGame = do
   let avgSkill = show . round . T.averageSkill . T.bestLineup
   putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
   printTeamVsTeam legia wisla
+
+prompt :: IO (String)
+prompt = putStr "> " >> hFlush stdout >> getLine
   
-handleMainMenu :: Char -> IO ()
-handleMainMenu '1' = playGame
-handleMainMenu _ = return ()
+handleMainMenu :: String -> IO ()
+handleMainMenu "1" = playGame
+handleMainMenu "2" = return ()
+handleMainMenu _ = putStrLn "Unknown option! Try again."
 
 mainMenu :: IO ()
 mainMenu = do
-  putStrLn "Menago v0.1\n1. New game\n2. Exit"
-  ch <- getChar
-  _ <- getChar
+  putStrLn $
+    "1. New game\n" ++
+    "2. Exit"
+  ch <- prompt
   handleMainMenu ch
-  if ch == '2' then return () else mainMenu
+  if ch == "2"
+    then return ()
+    else mainMenu
 
 main :: IO ()
-main = mainMenu
+main = putStrLn "Menago v0.1" >> mainMenu
