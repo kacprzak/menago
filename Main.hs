@@ -18,7 +18,8 @@ printTeamVsTeam :: T.Team -> T.Team -> IO ()
 printTeamVsTeam team1 team2 = do
   currDate <- getCurrentTime  
   let d = utctDay currDate
-  mapM_ putStrLn $ map (\(d,p1,p2) -> playerVsPlayer d p1 p2) $ zip3 (replicate 11 d) lineup1 lineup2
+  mapM_ putStrLn $ map (\(day,p1,p2) -> playerVsPlayer day p1 p2)
+    $ zip3 (replicate 11 d) lineup1 lineup2
   where
     lineup1 = T.bestLineup team1
     lineup2 = T.bestLineup team2
@@ -28,7 +29,7 @@ playGame = do
   let legia = TDB.legia
       wisla = TDB.wisla
   putStrLn $ (T.name legia) ++ " Vs " ++ (T.name wisla)
-  let avgSkill = show . round . T.averageSkill . T.bestLineup
+  let avgSkill = show . (round :: Double -> Int) . T.averageSkill . T.bestLineup
   putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
   printTeamVsTeam legia wisla
 
@@ -47,9 +48,7 @@ mainMenu = do
     "2. Exit"
   ch <- prompt
   handleMainMenu ch
-  if ch == "2"
-    then return ()
-    else mainMenu
+  if ch == "2" then return () else mainMenu
 
 main :: IO ()
 main = putStrLn "Menago v0.1" >> mainMenu
