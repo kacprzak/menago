@@ -4,6 +4,7 @@ import qualified TeamDB as TDB
 
 import Data.Time
 import System.IO
+import Text.Printf
 
 toNameAge :: Day -> P.Player -> String
 toNameAge day p = name ++ " (" ++ age ++ ")"
@@ -12,7 +13,7 @@ toNameAge day p = name ++ " (" ++ age ++ ")"
     age = show (P.age day p)
 
 playerVsPlayer :: Day -> P.Player -> P.Player -> String
-playerVsPlayer d p1 p2 = (toNameAge d p1) ++ "\t\tVs\t\t" ++ (toNameAge d p2)
+playerVsPlayer d p1 p2 = printf "%36s %36s" (toNameAge d p1) (toNameAge d p2)
 
 printTeamVsTeam :: T.Team -> T.Team -> IO ()
 printTeamVsTeam team1 team2 = do
