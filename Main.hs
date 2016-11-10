@@ -5,6 +5,8 @@ import qualified TeamDB as TDB
 import Data.Time
 import System.IO
 import Text.Printf
+import System.Random
+import Control.Monad.State
 
 toNameAge :: Day -> P.Player -> String
 toNameAge day p = name ++ " (" ++ age ++ ")"
@@ -25,6 +27,20 @@ printTeamVsTeam team1 team2 = do
     lineup1 = T.bestLineup team1
     lineup2 = T.bestLineup team2
 
+type MatchResult = (Int, Int)
+
+playAction :: Int -> State MatchResult ()
+playAction rand = do
+  (home, away) <- get
+  if rand >= 50 then put (home + 1, away) else put (home, away + 1)
+
+playActions :: T.Team -> T.Team -> IO ()
+playActions t1 t2 = do
+  g <- newStdGen
+  let rands = (take 90 $ randomRs (0, 100) g)::[Int]
+      actions = mapM_ playAction rands
+  print $ execState actions (0, 0)
+
 playGame :: IO ()
 playGame = do
   let legia = TDB.legia
@@ -33,6 +49,7 @@ playGame = do
   let avgSkill = show . (round :: Double -> Int) . T.averageSkill . T.bestLineup
   putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
   printTeamVsTeam legia wisla
+  playActions legia wisla
 
 prompt :: IO (String)
 prompt = putStr "> " >> hFlush stdout >> getLine
