@@ -18,3 +18,9 @@ bestLineup team = concat [take 1 (bestOn Goalkeeper p)
 
 averageSkill :: [Player] -> Double
 averageSkill ps = fromIntegral (sum (map skill ps)) / genericLength ps
+
+midfieldBalance :: ([Player], [Player]) -> Int
+midfieldBalance teams = 50 -- % chance to win action
+
+scoreChance :: ([Player], [Player]) -> Int
+scoreChance ps = 5 -- % chance to score a goal
