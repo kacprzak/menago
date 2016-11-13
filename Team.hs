@@ -23,4 +23,4 @@ midfieldBalance :: ([Player], [Player]) -> Int
 midfieldBalance teams = 50 -- % chance to win action
 
 scoreChance :: ([Player], [Player]) -> Int
-scoreChance ps = 5 -- % chance to score a goal
+scoreChance ps = 2 -- % chance to score a goal

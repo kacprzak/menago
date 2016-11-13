@@ -35,8 +35,9 @@ playGame = do
 --  let avgSkill = show . (round :: Double -> Int) . T.averageSkill . T.bestLineup
 --  putStrLn $ "Avg skill: " ++ (avgSkill legia) ++ " Vs " ++ (avgSkill wisla)
 --  printTeamVsTeam legia wisla
-  g <- newStdGen  
-  print . snd $ playActions g (legia,wisla)
+  g <- newStdGen
+  let matchState  = playActions g (legia,wisla)
+  print (posessionAsString matchState, goals matchState)
 
 prompt :: IO (String)
 prompt = putStr "> " >> hFlush stdout >> getLine
