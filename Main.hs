@@ -15,7 +15,9 @@ playGame = do
 --  printTeamVsTeam legia wisla
   g <- newStdGen
   let matchState  = playActions g (legia,wisla)
-  print (posessionAsString matchState, goals matchState)
+      score = goals matchState
+  putStrLn $ "Posession: " ++ posessionAsString matchState
+  putStrLn $ "Score:     " ++ show (fst score) ++ "-" ++ show (snd score)
 
 prompt :: IO (String)
 prompt = putStr "> " >> hFlush stdout >> getLine
