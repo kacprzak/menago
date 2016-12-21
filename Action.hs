@@ -24,11 +24,11 @@ posession (_,(homeActions, awayActions),_) =
   in (homePossesion, 100.0 - homePossesion)
 
 posessionAsString :: MatchState -> String
-posessionAsString ms = (show hp) ++ "-" ++ (show ap)
+posessionAsString ms = (show homePos) ++ "-" ++ (show awayPos)
   where
     pos = posession ms
-    hp = round . fst $ pos
-    ap = round . snd $ pos
+    homePos = (round . fst $ pos)::Int
+    awayPos = (round . snd $ pos)::Int
 
 homeGoal :: MatchState -> MatchState
 homeGoal (t,a,(homeGoals,awayGoals)) = (t,a,(homeGoals+1, awayGoals))

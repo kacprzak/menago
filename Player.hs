@@ -2,6 +2,7 @@ module Player where
 
 import Data.Time.Calendar
 import Data.List
+import Text.Printf
 
 data StrongerFoot = Left | Right | Both
   deriving (Show, Read)
@@ -36,3 +37,10 @@ filterByPosition pos = filter (\p -> (position p) == pos)
 bestOn :: Position -> [Player] -> [Player]
 bestOn pos ps = sortBySkill $ filterByPosition pos ps
 
+toNameAge :: Day -> Player -> String
+toNameAge day p = name p ++ " (" ++ playerAge ++ ")"
+  where
+    playerAge = show (age day p)
+
+playerVsPlayer :: Day -> Player -> Player -> String
+playerVsPlayer d p1 p2 = printf "%36s %36s" (toNameAge d p1) (toNameAge d p2)

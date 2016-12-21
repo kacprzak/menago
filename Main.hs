@@ -1,31 +1,9 @@
-import qualified Player as P
 import qualified Team as T
 import qualified TeamDB as TDB
 import Action
 
-import Data.Time
 import System.IO
-import Text.Printf
 import System.Random
-
-toNameAge :: Day -> P.Player -> String
-toNameAge day p = name ++ " (" ++ age ++ ")"
-  where
-    name = P.name p
-    age = show (P.age day p)
-
-playerVsPlayer :: Day -> P.Player -> P.Player -> String
-playerVsPlayer d p1 p2 = printf "%36s %36s" (toNameAge d p1) (toNameAge d p2)
-
-printTeamVsTeam :: T.Team -> T.Team -> IO ()
-printTeamVsTeam homeTeam awayTeam = do
-  currDate <- getCurrentTime  
-  let d = utctDay currDate
-  mapM_ putStrLn $ map (\(day,p1,p2) -> playerVsPlayer day p1 p2)
-    $ zip3 (replicate 11 d) homeLineup awayLineup
-  where
-    homeLineup = T.bestLineup homeTeam
-    awayLineup = T.bestLineup awayTeam
 
 playGame :: IO ()
 playGame = do
